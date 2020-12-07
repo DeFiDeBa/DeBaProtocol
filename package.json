@@ -1,0 +1,36 @@
+{
+  "name": "debalink",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx mocha --full-trace --timeout 0",
+    "build": "npx truffle build",
+    "deploy_dev": "npm run test && npx truffle migrate --network ropsten",
+    "agent": "node agent.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DeFiDeBa/DeBaProtocol.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DeFiDeBa/DeBaProtocol/issues"
+  },
+  "homepage": "https://github.com/DeFiDeBa/DeBaProtocol#readme",
+  "dependencies": {
+    "@openzeppelin/contracts": "^3.2.1-solc-0.7",
+    "@uniswap/v2-core": "^1.0.1",
+    "@uniswap/v2-periphery": "^1.1.0-beta.0",
+    "aes256": "^1.0.4",
+    "csv-stringify": "^5.5.1",
+    "ganache-cli": "^6.12.1",
+    "mocha": "^8.1.3",
+    "prompt": "^1.0.0",
+    "solc": "^0.7.3",
+    "truffle": "^5.1.52",
+    "truffle-hdwallet-provider": "^1.0.17",
+    "web3": "^1.3.0"
+  }
+}
