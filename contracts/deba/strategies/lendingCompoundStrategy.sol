@@ -30,13 +30,15 @@ contract CompoundLendingStrategy is ProfitNotifier {
     address public constant uniswap = address(0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D);
     address public constant weth = address(0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2);
 
-    constructor(address _mA, address _compAsset, address _agent) {
+    constructor(address _mA, address _compAsset, address _agent, address _fwd, address _vlt) {
         governance = msg.sender;
         vault = msg.sender;
         mainAsset = _mA;
         compAsset = _compAsset;
         agent = _agent;
         invested = 0;
+        feeRewardForwarder = _fwd;
+        vault = _vlt;
 
         (bool isListed, , ) = ComptrollerInterface(comptroller).markets(compAsset);
         require(isListed == true, 'comp token not found');
@@ -139,6 +141,9 @@ contract CompoundLendingStrategy is ProfitNotifier {
             path[0] = comp;
             path[1] = weth;
             path[2] = mainAsset;
+
+            IERC20(comp).safeApprove(uniswap, 0);
+            IERC20(comp).safeApprove(uniswap, _cBalance);
 
             IUniswapV2Router02(uniswap).swapExactTokensForTokens(_cBalance, uint256(0), path, address(this), block.timestamp.add(1800));
             uint256 _after = IERC20(mainAsset).balanceOf(address(this));
